@@ -107,8 +107,10 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
     public function send(): void {
         $this->load->language('extension/payment/sagepay_direct');
 
-        // Orders
+        // Account Order
         $this->load->model('account/order');
+
+        // Checkout Order
         $this->load->model('checkout/order');
 
         // Sagepay Direct
@@ -332,7 +334,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 
             if ($this->config->get('payment_sagepay_direct_transaction') == 'PAYMENT') {
                 // Loop through any products that are subscription items
-                $subscription_products = $this->cart->getSubscription();
+                $subscription_products = $this->cart->getSubscriptions();
 
                 foreach ($subscription_products as $item) {
                     $this->model_extension_payment_sagepay_direct->recurringPayment($item['subscription'], $payment_data['VendorTxCode']);
@@ -423,7 +425,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 
                 if ($this->config->get('payment_sagepay_direct_transaction') == 'PAYMENT') {
                     // Loop through any products that are subscription items
-                    $subscription_products = $this->cart->getSubscription();
+                    $subscription_products = $this->cart->getSubscriptions();
 
                     foreach ($subscription_products as $item) {
                         $this->model_extension_payment_sagepay_direct->recurringPayment($item['subscription'], $sagepay_order_info['VendorTxCode']);

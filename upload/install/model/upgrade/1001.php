@@ -172,7 +172,7 @@ class ModelUpgrade1001 extends Model {
 
                 $upgrade = true;
 
-                $lines   = file($file);
+                $lines = file($file);
 
                 foreach ($lines as $line) {
                     if (strpos($line, 'DIR_MODIFICATION') !== false) {
@@ -187,8 +187,8 @@ class ModelUpgrade1001 extends Model {
                     foreach ($lines as $line_id => $line) {
                         if (strpos($line, 'DIR_LOGS') !== false) {
                             $new_line = "define('DIR_MODIFICATION', '" . str_replace("\\", "/", DIR_SYSTEM) . 'modification/' . "');";
-                            $output   .= $new_line . "\n";
-                            $output   .= $line;
+                            $output .= $new_line . "\n";
+                            $output .= $line;
                         } else {
                             $output .= $line;
                         }
@@ -206,7 +206,7 @@ class ModelUpgrade1001 extends Model {
 
                 $upgrade = true;
 
-                $lines   = file($file);
+                $lines = file($file);
 
                 foreach ($lines as $line) {
                     if (strpos($line, 'DIR_UPLOAD') !== false) {
@@ -221,8 +221,8 @@ class ModelUpgrade1001 extends Model {
                     foreach ($lines as $line_id => $line) {
                         if (strpos($line, 'DIR_LOGS') !== false) {
                             $new_line = "define('DIR_UPLOAD', '" . str_replace("\\", "/", DIR_SYSTEM) . 'upload/' . "');";
-                            $output   .= $new_line . "\n";
-                            $output   .= $line;
+                            $output .= $new_line . "\n";
+                            $output .= $line;
                         } else {
                             $output .= $line;
                         }
@@ -240,7 +240,7 @@ class ModelUpgrade1001 extends Model {
 
                 $upgrade = false;
 
-                $lines   = file($file);
+                $lines = file($file);
 
                 foreach ($lines as $line) {
                     if (strpos($line, "'mysql'") !== false) {
@@ -255,7 +255,7 @@ class ModelUpgrade1001 extends Model {
                     foreach ($lines as $line_id => $line) {
                         if (strpos($line, "'mysql'") !== false) {
                             $new_line = "define('DB_DRIVER', 'mysqli');";
-                            $output   .= $new_line . "\n";
+                            $output .= $new_line . "\n";
                         } else {
                             $output .= $line;
                         }

@@ -45,7 +45,7 @@ $registry = new \Registry();
 $loader = new \Loader($registry);
 $registry->set('load', $loader);
 
-function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
+function handleError($errno, $errstr, $errfile, $errline) {
     // error was suppressed with the @-operator
     if (!(error_reporting() & $errno)) {
         return false;
@@ -99,7 +99,7 @@ function get_options($argv) {
 
     $options = [];
 
-    $total   = count($argv);
+    $total = count($argv);
 
     for ($i = 0; $i < $total; $i = $i + 2) {
         $is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
@@ -164,8 +164,8 @@ function install($options) {
 function check_requirements() {
     $error = null;
 
-    if (phpversion() < '8.1') {
-        $error = 'Warning: You need to use PHP7.3+ or above for OpenCart to work!';
+    if (phpversion() < '8.2') {
+        $error = 'Warning: You need to use PHP8.2+ or above for OpenCart to work!';
     }
 
     if (!ini_get('file_uploads')) {
@@ -200,7 +200,7 @@ function check_requirements() {
 }
 
 function setup_db($data) {
-    $db   = new \DB($data['db_driver'], htmlspecialchars_decode($data['db_hostname']), htmlspecialchars_decode($data['db_username']), htmlspecialchars_decode($data['db_password']), htmlspecialchars_decode($data['db_database']), $data['db_port']);
+    $db = new \DB($data['db_driver'], htmlspecialchars_decode($data['db_hostname']), htmlspecialchars_decode($data['db_username']), htmlspecialchars_decode($data['db_password']), htmlspecialchars_decode($data['db_database']), $data['db_port']);
 
     $file = DIR_APPLICATION . 'opencart.sql';
 
@@ -352,19 +352,18 @@ function dir_permissions() {
     exec('chmod o+w -R ' . implode(' ', $dirs));
 }
 
-$argv       = $_SERVER['argv'];
-$script     = array_shift($argv);
+$argv = $_SERVER['argv'];
+$script = array_shift($argv);
 $subcommand = array_shift($argv);
 
 switch ($subcommand) {
-
     case "install":
         try {
             $options = get_options($argv);
 
             define('HTTP_OPENCART', $options['http_server']);
 
-            $valid   = valid($options);
+            $valid = valid($options);
 
             if (!$valid[0]) {
                 echo "FAILED! Following inputs were missing or invalid: ";

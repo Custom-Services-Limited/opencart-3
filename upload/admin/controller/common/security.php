@@ -76,16 +76,14 @@ class ControllerCommonSecurity extends Controller {
                 while (count($source) != 0) {
                     $next = array_shift($source);
 
-                    if (is_dir($next)) {
-                        foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-                            // If directory add to path array
-                            if (is_dir($file)) {
-                                $source[] = $file . '/*';
-                            }
-
-                            // Add the file to the files to be deleted array
-                            $files[] = $file;
+                    foreach (glob($next) as $file) {
+                        // If directory add to path array
+                        if (is_dir($file)) {
+                            $source[] = $file . '/*';
                         }
+
+                        // Add the file to the files to be deleted array
+                        $files[] = $file;
                     }
                 }
 
